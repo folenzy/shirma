@@ -1,0 +1,49 @@
+[project]
+name = "shirma"
+version = "0.1.0"
+description = "Шлюз к LLM, который прячет персональные данные из запросов и возвращает их в ответ"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "httpx>=0.27",
+    "pydantic-settings>=2.3",
+    "pyyaml>=6.0",
+    "pymorphy3>=2.0",
+    "natasha>=1.6",
+]
+
+[project.scripts]
+shirma = "shirma.__main__:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "hypothesis>=6.100", "faker>=30", "ruff>=0.6"]
+
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["shirma*"]
+
+[tool.setuptools.package-data]
+shirma = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+filterwarnings = ["ignore::DeprecationWarning:natasha.*", "ignore::DeprecationWarning:slovnet.*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "S", "C4", "SIM"]
+ignore = ["E501", "S101"]
+
+[tool.ruff.lint.per-file-ignores]
+# Синтетический корпус: нужен воспроизводимый генератор с сидом, а не криптостойкий.
+"bench/*" = ["S311"]

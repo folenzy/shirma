@@ -1,0 +1,16 @@
+services:
+  shirma:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # mock — встроенная учебная модель, работает без ключей и сети.
+      # Для Ollama на этой же машине: http://host.docker.internal:11434/v1
+      SHIRMA_UPSTREAM_URL: ${SHIRMA_UPSTREAM_URL:-mock}
+      SHIRMA_UPSTREAM_API_KEY: ${SHIRMA_UPSTREAM_API_KEY:-}
+      SHIRMA_DEMO: ${SHIRMA_DEMO:-true}
+      SHIRMA_POLICY: /config/policy.yaml
+    volumes:
+      - ./policy.example.yaml:/config/policy.yaml:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

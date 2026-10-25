@@ -1,0 +1,15 @@
+# Политика маскирования. Путь к файлу — в SHIRMA_POLICY.
+
+# Что прятать. Доступно: PER, ORG, LOC, ADDRESS, PHONE, EMAIL, INN, SNILS,
+# CARD, PASSPORT, ACCOUNT. Города (LOC) по умолчанию не прячутся.
+mask: [PER, ORG, ADDRESS, PHONE, EMAIL, INN, SNILS, CARD, PASSPORT, ACCOUNT]
+
+# Что не прятать никогда: своё юрлицо, публичные имена из продукта.
+allow:
+  - ООО «Ширма»
+
+# Склонять имена при возврате по предлогу: «для [PER_1]» → «для Петра Иванова».
+restore_case: true
+
+# Добавлять модели системную подсказку не трогать метки.
+inject_hint: true
